@@ -2,11 +2,12 @@
 
 import cmd
 import models
-from models.base_model import BaseModel
 import shlex
+from models.base_model import BaseModel
+from models.user import User
 
+classes = {"BaseModel": BaseModel, "User": User}
 
-classes = {"BaseModel": BaseModel}
 
 class HBNBCommand(cmd.Cmd):
 

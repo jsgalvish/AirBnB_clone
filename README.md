@@ -11,6 +11,6 @@ This project aims to implement a copy of the AirBnb website on our server.
 * Delete an object
 
 ## How to use?
-Clone the repository below
-Access the AirBnb_clone folder
-Run it interactively and non-interactively
+* Clone the repository below "https://github.com/jsgalvish/AirBnB_clone.git"
+* Access the AirBnb_clone folder
+* Run it interactively and non-interactively

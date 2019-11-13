@@ -4,7 +4,7 @@
 
 This project aims to implement a copy of the AirBnb website on our server.
 
-#### Interpreter of commanders:
+#### Interpreter of commands:
 
 * Create a new object (user or place)
 * Recover an object from a file

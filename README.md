@@ -1,5 +1,7 @@
 # 0x00. AirBnB clone - The console
 
+<img src="https://i.gifer.com/647b.gif" >
+
 This project aims to implement a copy of the AirBnb website on our server.
 
 #### Interpreter of commanders:

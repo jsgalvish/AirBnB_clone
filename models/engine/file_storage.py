@@ -9,7 +9,8 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 
-classes = {"BaseModel": BaseModel, "User": User, "Amenity": Amenity, "City": City, "Place": Place, "Review": Review, "State": State}
+classes = {"BaseModel": BaseModel, "User": User, "Amenity": Amenity,
+           "City": City, "Place": Place, "Review": Review, "State": State}
 
 
 class FileStorage:
@@ -39,5 +40,5 @@ class FileStorage:
             for key in j__objects:
                 self.__objects[key] = classes[j__objects[key]
                                               ["__class__"]](**j__objects[key])
-        except:
+        except Exception as e:
             pass

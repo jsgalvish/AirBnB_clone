@@ -40,3 +40,6 @@ class FileStorage():
                 for k, v in d.items():
                     cls = v["__class__"]
                     self.new(eval(cls)(**v))
+    def reset(self):
+        """Reset all objects in __objects"""
+        self.__objects = {}

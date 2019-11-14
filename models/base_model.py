@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+class BaseModel
+"""
 
 from datetime import datetime
 import uuid
@@ -8,8 +11,10 @@ time = "%Y-%m-%dT%H:%M:%S.%f"
 
 
 class BaseModel:
+    """BaseModel class"""
 
     def __init__(self, *args, **kwargs):
+        """initialization"""
         if kwargs:
             for key, value in kwargs.items():
                 if key != "__class__":
@@ -26,13 +31,16 @@ class BaseModel:
             models.storage.save()
 
     def __str__(self):
+        """string"""
         return "[{:s}] ({:s}) {}".format(self.__class__.__name__,
                                          self.id, self.__dict__)
 
     def save(self):
+        """save"""
         self.updated_at = datetime.now()
 
     def to_dict(self):
+        """dictionary"""
         n_dict = self.__dict__.copy()
         if "created_at" in n_dict:
             n_dict["created_at"] = n_dict["created_at"].strtime(time)

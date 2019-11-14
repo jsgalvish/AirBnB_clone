@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-
 """FileStorage class"""
-
 from models.base_model import BaseModel
 import json
 from os import path
@@ -14,7 +12,7 @@ from models.review import Review
 
 
 class FileStorage():
-    """FileStorage class"""
+    """File Storage class"""
     __file_path = "file.json"
     __objects = {}
 

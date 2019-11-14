@@ -3,8 +3,8 @@
 
 This project aims to implement a copy of the AirBnb website on our server also is very important because after o this project depend another projects with HTML, css, database storage and another more things.
 
-#The console:
-For can use the console, the firs step is import the module cmd is like a shell but change any things.
+# The console:
+   * For can use the console, the firs step is import the module cmd is like a shell but change any things.
 
   #### Interpreter of commands:
 

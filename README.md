@@ -1,6 +1,6 @@
 # 0x00. AirBnB clone - The console
 
-<img src="https://i.gifer.com/647b.gif" >
+![alt text](https://i.gifer.com/647b.gif)
 
 This project aims to implement a copy of the AirBnb website on our server also is very important because after o this project depend another projects with HTML, css, database storage and another more things.
 
@@ -32,3 +32,7 @@ and can start to use the hbnb console
 id don't apply to create command
 ### For help:
 ```help <command>```
+
+#AUTHORS
+[Miguel Angel Salazar](https://github.com/jsgalvish)
+[Juan Sebastian Galvis](https://github.com/zelda096)

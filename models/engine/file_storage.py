@@ -1,5 +1,7 @@
 #!/usr/bin/python3
+
 """FileStorage class"""
+
 from models.base_model import BaseModel
 import json
 from os import path
@@ -10,9 +12,12 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
+classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
+
 
 class FileStorage():
-    """File Storage class"""
+    """FileStorage class"""
     __file_path = "file.json"
     __objects = {}
 
@@ -22,24 +27,22 @@ class FileStorage():
 
     def new(self, obj):
         """new obj"""
-        k = obj.__class__.__name__ + "." + obj.id
-        self.__objects[k] = obj
+        if obj is not None:
+            k = obj.__class__.__name__ + "." + obj.id
+            self.__objects[k] = obj
 
     def save(self):
         """save json"""
-        d = {k: v.to_dict()
-             for k, v in self.__objects.items()}
-        with open(self.__file_path, mode='w') as f:
-            json.dump(d, f)
+        json_objects = {}
+        for key in self.__objects:
+            json_objects[key] = self.__objects[key].to_dict()
+        with open(self.__file_path, 'w') as f:
+            json.dump(json_objects, f)
 
     def reload(self):
         """reload json"""
         if path.isfile(self.__file_path):
-            with open(self.__file_path) as f:
-                d = json.load(f)
-                for k, v in d.items():
-                    cls = v["__class__"]
-                    self.new(eval(cls)(**v))
-    def reset(self):
-        """Reset all objects in __objects"""
-        self.__objects = {}
+            with open(self.__file_path, 'r') as f:
+                jo = json.load(f)
+            for key in jo:
+                self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])

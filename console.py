@@ -11,7 +11,8 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 
-classes = {"BaseModel": BaseModel, "User": User, "Amenity": Amenity, "City": City, "Place": Place, "Review": Review, "State": State}
+classes = {"BaseModel": BaseModel, "User": User, "Amenity": Amenity,
+           "City": City, "Place": Place, "Review": Review, "State": State}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -116,12 +117,12 @@ class HBNBCommand(cmd.Cmd):
                                 if args[2] in integers:
                                     try:
                                         args[3] = int(args[3])
-                                    except:
+                                    except Exception as e:
                                         args[3] = 0
                                 elif args[2] in floats:
                                     try:
                                         args[3] = float(args[3])
-                                    except:
+                                    except Exception as e:
                                         args[3] = 0.0
                             setattr(models.storage.all()[k], args[2], args[3])
                             models.storage.all()[k].save()

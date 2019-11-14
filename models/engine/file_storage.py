@@ -1,44 +1,44 @@
 #!/usr/bin/python3
 
-import json
+"""FileStorage class"""
+
 from models.base_model import BaseModel
+import json
+from os import path
 from models.user import User
-from models.amenity import Amenity
+from models.state import State
 from models.city import City
+from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-from models.state import State
-
-classes = {"BaseModel": BaseModel, "User": User, "Amenity": Amenity,
-           "City": City, "Place": Place, "Review": Review, "State": State}
 
 
-class FileStorage:
-
+class FileStorage():
+    """FileStorage class"""
     __file_path = "file.json"
     __objects = {}
 
     def all(self):
+        """returns __objects"""
         return self.__objects
 
     def new(self, obj):
-        if obj is not None:
-            key = obj.__class__.__name__ + "." + obj.id
-            self.__objects[key] = obj
+        """new obj"""
+        k = obj.__class__.__name__ + "." + obj.id
+        self.__objects[k] = obj
 
     def save(self):
-        j__objects = {}
-        for key in self.__objects:
-            j__objects[key] = self.__objects[key].to_dict()
-        with open(self.__file_path, 'w') as __file:
-            json.dump(j__objects, __file)
+        """save json"""
+        d = {k: v.to_dict()
+             for k, v in self.__objects.items()}
+        with open(self.__file_path, mode='w') as f:
+            json.dump(d, f)
 
     def reload(self):
-        try:
-            with open(self.__file_path, 'r') as __file:
-                j__objects = json.load(__file)
-            for key in j__objects:
-                self.__objects[key] = classes[j__objects[key]
-                                              ["__class__"]](**j__objects[key])
-        except Exception as e:
-            pass
+        """reload json"""
+        if path.isfile(self.__file_path):
+            with open(self.__file_path) as f:
+                d = json.load(f)
+                for k, v in d.items():
+                    cls = v["__class__"]
+                    self.new(eval(cls)(**v))

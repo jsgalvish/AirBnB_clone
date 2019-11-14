@@ -1,50 +1,51 @@
 #!/usr/bin/python3
+
 """
-class BaseModel
+ BaseModel class.
 """
 
-from datetime import datetime
-import uuid
 import models
+from uuid import uuid4
+from datetime import datetime
 
-time = "%Y-%m-%dT%H:%M:%S.%f"
 
-
-class BaseModel:
+class BaseModel():
     """BaseModel class"""
 
     def __init__(self, *args, **kwargs):
-        """initialization"""
+        """initialize"""
         if kwargs:
-            for key, value in kwargs.items():
-                if key != "__class__":
-                    setattr(self, key, value)
-            if hasattr(self, "created_at") and type(self.created_at) is str:
-                self.created_at = datetime.strptime(kwargs["created_at"], time)
-            if hasattr(self, "updated_at") and type(self.updated_at) is str:
-                self.updated_at = datetime.strptime(kwargs["updated_at"], time)
+            for k, v in kwargs.items():
+                if k == "created_at" or k == "updated_at":
+                    setattr(self, k, datetime.strptime(
+                        v, "%Y-%m-%dT%H:%M:%S.%f"))
+                elif k == "__class__":
+                    continue
+                else:
+                    setattr(self, k, v)
         else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = self.created_at
+            self.id = str(uuid4())
+            self.created_at = datetime.utcnow()
+            self.updated_at = datetime.utcnow()
             models.storage.new(self)
-            models.storage.save()
 
     def __str__(self):
-        """string"""
-        return "[{:s}] ({:s}) {}".format(self.__class__.__name__,
-                                         self.id, self.__dict__)
+        """print"""
+        cls_name = self.__class__.__name__
+        return "[{}] ({}) {}".format(cls_name, self.id, self.__dict__)
 
     def save(self):
         """save"""
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.utcnow()
+        models.storage.save()
 
     def to_dict(self):
         """dictionary"""
-        n_dict = self.__dict__.copy()
-        if "created_at" in n_dict:
-            n_dict["created_at"] = n_dict["created_at"].strtime(time)
-        if "updated_at" in n_dict:
-            n_dict["updated_at"] = n_dict["updated_at"].strtime(time)
-        n_dict["__class"] = self.__class__.__name__
-        return n_dict
+        d = {}
+        for k, v in self.__dict__.items():
+            if k == "created_at" or k == "updated_at":
+                d[k] = datetime.isoformat(v)
+            else:
+                d[k] = v
+        d["__class__"] = self.__class__.__name__
+        return d
